@@ -1,4 +1,4 @@
-# job\_conf-galaxy
+# Galaxy job\_conf.xml
 
 job.conf.xml file | description| issues| Galaxy release
 ---|---|---|---|
