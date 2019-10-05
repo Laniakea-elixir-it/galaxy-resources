@@ -1,6 +1,6 @@
 # Galaxy job\_conf.xml
 
-job.conf.xml file | Description| Issues| Galaxy release
+job.conf.xml file | Description| Issues| Tested with
 ---|---|---|---|
 *chronos\_job\_conf.xml* | configuration to run galaxy jobs on an Apache MESOS cluster | The jobs are run but there are problem in linking the results in the history, the runner chronos.py called by the chronos destination block lacks some features: it is not possible to attach more than one volume (e.g. cvmfs for reference data), the jobs are not executed in the default working directory and this parameter can not be set. | Galaxy 18.05
 *docker\_default\_local\_job\_conf.xml* | Configuration to run galaxy jobs using tools dockerized with mulled | The configuration work without problems is also possible to attach cvmfs volumes for reference data. Some of the tools can't be run with mulled, for this reason is better to specify the tools that should run with Conda in the tool block. | Galaxy 18.05
