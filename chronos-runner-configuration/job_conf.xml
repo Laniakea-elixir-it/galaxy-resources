@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<job_conf>
+    <plugins>
+        <plugin id="local" type="runner" load="galaxy.jobs.runners.local:LocalJobRunner" workers="4"/>
+        <plugin id="chronos" type="runner" load="galaxy.jobs.runners.chronos:ChronosJobRunner" workers="4">
+            <param id="chronos">cloud-212-189-205-95.cloud.ba.infn.it:4443</param>
+            <!-- Hostname which runs Chronos instance. -->
+            <param id="owner">user_email</param>
+            <!-- The email address of the person responsible for the job. -->
+            <param id="username">chronos_account</param>
+            <!-- Username to access Mesos cluster. -->
+            <param id="password">chronos_password</param>
+            <!-- Password to access Mesos cluster. -->
+            <param id="insecure">false</param>
+            <!-- False to communicate with Chronos over HTTPS; true otherwise-->
+        </plugin>
+    </plugins>
+
+    <destinations default="chronos_dest">
+        <destination id="local" runner="local">
+                <param id="local_slots">2</param>
+        </destination>
+        <destination id="chronos_dest" runner="chronos">
+            <param id="docker_enabled">true</param>
+            <param id="docker_memory">512</param>
+            <param id="docker_set_user">galaxy</param>
+            <param id="docker_cpu">4</param>
+            <param id="volumes">/export/galaxy:/export/galaxy:RW,/home/galaxy/galaxy:/home/galaxy/galaxy:RO,/cvmfs/data.galaxyproject.org:/cvmfs/data.galaxyproject.org:RO</param>
+            <param id="max_retries">0</param>
+        </destination>
+    </destinations>
+
+    <tools>
+        <tool id="upload1" destination="local"/>
+        <tool id="Filter1" destination="local"/>
+    </tools>
+
+    <limits>
+        <limit type="registered_user_concurrent_jobs">100</limit>
+        <limit type="unregistered_user_concurrent_jobs">0</limit>
+        <limit type="job_walltime">72:00:00</limit>
+        <limit type="output_size">268435456000</limit>
+    </limits>
+</job_conf>
